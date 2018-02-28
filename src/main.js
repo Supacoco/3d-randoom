@@ -1,41 +1,43 @@
 import { Xorshift } from '@supacoc0/randoom'
+import P5 from 'p5'
 
 const generator = new Xorshift(1337)
+// const generator = new Xorshift(new Date())
 
 const WIDTH = 600
 
 const root = document.createElement('div')
 root.id = 'root'
 
-const canvas = document.createElement('canvas')
-canvas.id = 'canvas'
-canvas.width = WIDTH
-canvas.height = WIDTH
-
 document.querySelector('body')
   .appendChild(root)
-  .appendChild(canvas)
 
-const context = canvas.getContext('2d')
-context.fillStyle = '#000'
-context.fillRect(0, 0, WIDTH, WIDTH)
-
-context.fillStyle = '#3F3'
-
-Array(10000)
+const dots = Array(10000)
   .fill()
   .map(() => ({
     x: generator.generate(),
-    y: generator.generate()
+    y: generator.generate(),
+    z: generator.generate()
   }))
-  .forEach(dot => {
-    context.beginPath()
-    context.arc(
-      dot.x * WIDTH,
-      dot.y * WIDTH,
-      1,
-      0,
-      Math.PI * 2
-    )
-    context.fill()
-  })
+let currentIndex = 0
+
+new P5((p5) => {
+  p5.setup = () => {
+    p5.createCanvas(WIDTH, WIDTH)
+    p5.fill(51)
+    p5.rect(0, 0, WIDTH, WIDTH)
+  }
+
+  p5.draw = () => {
+    const dot = dots[currentIndex]
+    p5.noStroke()
+    p5.fill(51, 255, 51)
+    p5.rect(dot.x * WIDTH, dot.y * WIDTH, 1, 1)
+
+    currentIndex += 1
+    if (currentIndex >= dots.length) {
+      p5.noLoop()
+      console.log('finished')
+    }
+  }
+}, root)
