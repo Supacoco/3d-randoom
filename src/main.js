@@ -5,6 +5,7 @@ const generator = new Xorshift(1337)
 // const generator = new Xorshift(new Date())
 
 const WIDTH = 600
+const ITERATIONS = 1000
 
 const root = document.createElement('div')
 root.id = 'root'
@@ -12,7 +13,7 @@ root.id = 'root'
 document.querySelector('body')
   .appendChild(root)
 
-const dots = Array(10000)
+const dots = Array(ITERATIONS)
   .fill()
   .map(() => ({
     x: generator.generate(),
@@ -38,7 +39,7 @@ new P5((p5) => {
     p5.box(200)
     p5.noStroke()
     dots.forEach(dot => {
-      const color = p5.map(currentIndex, 0, 10000, 0, 255)
+      const color = p5.map(currentIndex, 0, ITERATIONS, 0, 255)
       p5.fill(color, 255, 255)
       p5.push()
       p5.translate(dot.x * 500, dot.y * 500, dot.z * 500)
