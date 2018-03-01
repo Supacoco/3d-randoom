@@ -33,7 +33,7 @@ new P5((p5) => {
     currentIndex = 0
     p5.background(0)
     p5.translate(500 / 2, 500 / 2, -100)
-    p5.rotateY(p5.millis() / 1000)
+    p5.rotateY(p5.mouseX / 100)
     p5.stroke(255)
     p5.noFill()
     p5.box(200)
@@ -42,7 +42,9 @@ new P5((p5) => {
       const color = p5.map(currentIndex, 0, ITERATIONS, 0, 255)
       p5.fill(color, 255, 255)
       p5.push()
-      p5.translate(dot.x * 500, dot.y * 500, dot.z * 500)
+      p5.translate(-100, 100, 100)
+      p5.sphere(10)
+      p5.translate(dot.x * 200, dot.y * -200, dot.z * -200)
       p5.sphere(1)
       p5.pop()
       currentIndex++
