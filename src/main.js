@@ -56,8 +56,6 @@ while (tmpDots.length) {
   // })
 }
 
-console.log(dots)
-
 let currentIndex = 0
 let color
 
@@ -72,18 +70,39 @@ new P5((p5) => {
     currentIndex = 0
     p5.background(0)
     p5.translate(BOX_WIDTH / 2, BOX_WIDTH / 2, -BOX_WIDTH / 2)
+
     p5.rotateY(p5.mouseX / 100)
     p5.rotateX(p5.mouseY / 100)
-    // p5.stroke('grey')
-    // p5.noFill()
-    // p5.sphere(BOX_WIDTH, 8, 8)
+
     p5.stroke('white')
     p5.line(-BOX_WIDTH / 1.25, 0, 0, BOX_WIDTH / 1.25, 0, 0)
     p5.line(0, -BOX_WIDTH / 1.25, 0, 0, BOX_WIDTH / 1.25, 0)
     p5.line(0, 0, BOX_WIDTH / 1.25, 0, 0, -BOX_WIDTH / 1.25)
-    p5.fill(128)
+
+    // draw axis directions
     p5.noStroke()
-    // p5.sphere(10)
+    p5.fill(255)
+
+    p5.push()
+    p5.translate(BOX_WIDTH / 1.25, 0, 0)
+    p5.rotateZ(-Math.PI / 2)
+    p5.cone(5, 20)
+    p5.pop()
+
+    p5.push()
+    p5.translate(0, -BOX_WIDTH / 1.25, 0)
+    p5.rotateZ(Math.PI)
+    p5.cone(5, 20)
+    p5.pop()
+
+    p5.push()
+    p5.translate(0, 0, -BOX_WIDTH / 1.25)
+    p5.rotateX(-Math.PI / 2)
+    p5.cone(5, 20)
+    p5.pop()
+    // end draw
+
+    p5.noStroke()
     dots.forEach(dot => {
       color = p5.map(currentIndex, 0, ITERATIONS, 0, 255)
       p5.fill(color, 255, 255)
