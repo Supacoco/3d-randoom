@@ -58,6 +58,8 @@ while (tmpDots.length) {
 
 let currentIndex = 0
 let color
+let rotateX = 0
+let rotateY = 0
 
 new P5((p5) => {
   p5.setup = () => {
@@ -71,8 +73,13 @@ new P5((p5) => {
     p5.background(0)
     p5.translate(BOX_WIDTH / 2, BOX_WIDTH / 2, -BOX_WIDTH / 2)
 
-    p5.rotateY(p5.mouseX / 100)
-    p5.rotateX(p5.mouseY / 100)
+    p5.rotateY(rotateY)
+    p5.rotateX(rotateX)
+
+    if (p5.mouseIsPressed) {
+      rotateY += (p5.mouseX - p5.pmouseX) / 100
+      rotateX += (p5.mouseY - p5.pmouseY) / 100
+    }
 
     p5.stroke('white')
     p5.line(-BOX_WIDTH / 1.25, 0, 0, BOX_WIDTH / 1.25, 0, 0)
@@ -83,18 +90,21 @@ new P5((p5) => {
     p5.noStroke()
     p5.fill(255)
 
+    // x axis
     p5.push()
     p5.translate(BOX_WIDTH / 1.25, 0, 0)
     p5.rotateZ(-Math.PI / 2)
     p5.cone(5, 20)
     p5.pop()
 
+    // y axis
     p5.push()
     p5.translate(0, -BOX_WIDTH / 1.25, 0)
     p5.rotateZ(Math.PI)
     p5.cone(5, 20)
     p5.pop()
 
+    // z axis
     p5.push()
     p5.translate(0, 0, -BOX_WIDTH / 1.25)
     p5.rotateX(-Math.PI / 2)
